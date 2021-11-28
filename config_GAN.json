@@ -24,8 +24,8 @@
     "data_loader": {
         "type": "COWCGANFrcnnDataLoader",
         "args":{
-            "data_dir_GT": "datasets/DetectionPatches_256x256/test/LR",
-            "data_dir_LQ": "datasets/DetectionPatches_256x256/test/LR",
+            "data_dir_GT": "/Users/baumatz/Documents/python/wndwrd/data/fujairah_fixed",
+            "data_dir_LQ": "/Users/baumatz/Documents/python/wndwrd/data/fujairah_fixed",
             "batch_size": 2,
             "shuffle": true,
             "validation_split": 0.0,
