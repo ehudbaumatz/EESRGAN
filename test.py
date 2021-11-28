@@ -1,5 +1,7 @@
 import argparse
 import os
+from pathlib import Path
+
 import torch
 
 import data_loader.data_loaders as module_data
@@ -30,22 +32,27 @@ def main(config):
     loader = module_data.COWCGANDataLoader(config["data_loader"]["args"]["data_dir_LQ"],
                                            config["data_loader"]["args"]["data_dir_LQ"],
                                                      batch_size=1, training=False, num_workers=0)
-
+    SR_FOLDER = ''
     pbar = tqdm(loader)
     for data, _ in pbar:
+        try:
+            img_name = data['LQ_path'][0] #  os.path.splitext(os.path.basename(data['LQ_path'][0]))[0]
+            pbar.set_description(f'calc {img_name}')
+            save_to = img_name.replace('datasets/', 'SR_IMAGES/')
+            folder = Path('/'.join(save_to.split('/')[:-1]))
+            if not folder.exists():
+                folder.mkdir(parents=True, exist_ok=True)
+            # print(save_to)
 
-        img_name = data['LQ_path'][0] #  os.path.splitext(os.path.basename(data['LQ_path'][0]))[0]
-        pbar.set_description(f'processing {img_name}')
-        save_to = img_name[:-3] + 'SR.png'
-        # print(save_to)
-
-        model.feed_data(data)
-        model.test()
-        #
-        visuals = model.get_current_visuals()
-        # sr_img = tensor2img(visuals['SR'])  # uint8
-        final_SR = tensor2img(visuals['final_SR']) # uint8
-        save_img(final_SR, save_to)
+            model.feed_data(data)
+            model.test()
+            #
+            visuals = model.get_current_visuals()
+            # sr_img = tensor2img(visuals['SR'])  # uint8
+            final_SR = tensor2img(visuals['final_SR']) # uint8
+            save_img(final_SR, save_to)
+        except Exception as ex:
+            print(ex)
 
 
 
