@@ -31,10 +31,11 @@ def main(config):
                                            config["data_loader"]["args"]["data_dir_LQ"],
                                                      batch_size=1, training=False, num_workers=0)
 
+    pbar = tqdm(loader)
+    for data, _ in pbar:
 
-    for data, _ in tqdm(loader):
-        #print(val_data)
         img_name = data['LQ_path'][0] #  os.path.splitext(os.path.basename(data['LQ_path'][0]))[0]
+        pbar.set_description(f'processing {img_name}')
         save_to = img_name[:-3] + 'SR.png'
         # print(save_to)
 
