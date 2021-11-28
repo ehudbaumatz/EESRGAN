@@ -1,20 +1,20 @@
 from __future__ import print_function, division
-import os
-import torch
-import numpy as np
-import glob
-import cv2
-import matplotlib.pyplot as plt
-from torch.utils.data import Dataset, DataLoader
-from torchvision import transforms, utils
 
+import glob
 # Ignore warnings
 import warnings
+from pathlib import Path
+
+import cv2
+import numpy as np
+import torch
+from torch.utils.data import Dataset
+
 warnings.filterwarnings("ignore")
 
 
 class COWCGANDataset(Dataset):
-  def __init__(self, data_dir_gt, data_dir_lq, image_height=256, image_width=256, transform = None):
+  def __init__(self, data_dir_gt, data_dir_lq, image_height=256, image_width=256, transform = None, ext='png'):
     self.data_dir_gt = data_dir_gt
     self.data_dir_lq = data_dir_lq
     #take all under same folder for train and test split.
@@ -22,8 +22,9 @@ class COWCGANDataset(Dataset):
     self.image_height = image_height
     self.image_width = image_width
     #sort all images for indexing, filter out check.jpgs
-    self.imgs_gt = list(sorted(glob.glob(self.data_dir_gt+"*.jpg")))
-    self.imgs_lq = list(sorted(glob.glob(self.data_dir_lq+"*.jpg")))
+    images = list([path.as_posix() for path in Path(self.data_dir_lq).rglob(f"*.{ext}")])
+    self.imgs_gt = images
+    self.imgs_lq = images
     # self.annotation = list(sorted(glob.glob(self.data_dir_lq+"*.txt")))
 
   def __getitem__(self, idx):

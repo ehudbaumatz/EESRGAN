@@ -24,8 +24,8 @@
     "data_loader": {
         "type": "COWCGANFrcnnDataLoader",
         "args":{
-            "data_dir_GT": "datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/HR/x4/",
-            "data_dir_LQ": "datasets/COWC/DetectionPatches_256x256/Potsdam_ISPRS/LR/x4/",
+            "data_dir_GT": "datasets/DetectionPatches_256x256/test/LR",
+            "data_dir_LQ": "datasets/DetectionPatches_256x256/test/LR",
             "batch_size": 2,
             "shuffle": true,
             "validation_split": 0.0,
