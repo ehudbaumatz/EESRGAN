@@ -13,6 +13,7 @@ from itertools import repeat
 from collections import OrderedDict
 
 from datetime import datetime
+from torchvision.utils import make_grid
 
 BOX_COLOR = (255, 0, 0)
 TEXT_COLOR = (255, 255, 255)
@@ -117,12 +118,13 @@ def collate_fn(batch):
     image['LQ_path'] = list()
 
     for obj in batch:
-        b = obj[0]
+        b = obj  #[0]
         image['object'].append(b['object'])
         image['image'].append(b['image'])
         image['image_lq'].append(b['image_lq'])
         image['LQ_path'].append(b['LQ_path'])
-        target.append(obj[1])
+        # target.append(obj[1])
+        target.append('None')
 
     image['object'] = torch.stack(image['object'], dim=0)
     image['image'] = torch.stack(image['image'], dim=0)

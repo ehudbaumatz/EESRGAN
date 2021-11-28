@@ -10,7 +10,7 @@ from albumentations import (
     BboxParams, RandomCrop, Normalize, Resize, VerticalFlip
 )
 
-from albumentations.pytorch import ToTensor
+from albumentations.pytorch import ToTensorV2
 from utils import collate_fn
 #from detection.utils import collate_fn
 
